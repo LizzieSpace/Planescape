@@ -1,0 +1,17 @@
+# ----------------------------------- PULL REQUESTS ----------------------------------- #
+
+'pr status: conflicts':
+  prs:
+    comment: >
+      @{issue-author}, this pull request has merge conflicts with the target branch. Please merge the latest changes and leave a message here so we can continue with the process of reviewing and merging this pull request. Thanks!
+
+'pr status: waiting for author':
+  prs:
+    comment: >
+      @{issue-author}, a developer has left a review and requested changes. Please make the requested changes or further discuss them with the developer so this pull request can be merged. Thanks!
+
+'pr status: wrong target':
+  prs:
+    comment: >
+      @{issue-author}, this pull request is targeting the wrong branch. Pull requests should target the branch corresponding to the earliest supported Minecraft version unless the changes are specific to code that only exists for a newer Minecraft version. Please change the target branch, resolve any merge conflicts, and leave a message here so we can continue with the process of reviewing and merging this pull request. Thanks!
+

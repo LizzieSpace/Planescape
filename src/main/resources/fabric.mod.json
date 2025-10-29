@@ -4,8 +4,13 @@
   "version": "${version}",
   "name": "Planescape",
   "description": "Tool for dimension generation and management.",
-  "authors": [],
-  "contact": {},
+  "authors": ["Niko Hori K."],
+  "contact": {
+    "email": "horikomaru@gmail.com",
+    "homepage": "https://github.com/LizzieSpace/Planescape",
+    "sources": "https://github.com/LizzieSpace/Planescape",
+    "issues": "https://github.com/LizzieSpace/Planescape/issues"
+  },
   "license": "MIT",
   "icon": "assets/planescape/icon.png",
   "environment": "*",
@@ -23,5 +28,12 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+          "modmenu.wiki": ""
+      }
+    }
   }
 }
