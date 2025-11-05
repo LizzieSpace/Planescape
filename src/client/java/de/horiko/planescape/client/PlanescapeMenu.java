@@ -1,5 +1,6 @@
 package de.horiko.planescape.client;
 
+import de.horiko.planescape.client.api.ClientNetworking;
 import io.wispforest.owo.ui.base.BaseOwoScreen;
 import io.wispforest.owo.ui.component.Components;
 import io.wispforest.owo.ui.container.Containers;
@@ -31,8 +32,7 @@ public class PlanescapeMenu extends BaseOwoScreen<FlowLayout> {
 		rootComponent.child(
 				Containers.verticalFlow(Sizing.content(), Sizing.content())
 				          .child(Components.button(Component.literal("A Button"), button -> {
-
-							  System.out.println("click");
+                              System.out.println("Server Initialized: " + ClientNetworking.isServerInitialized()); //TODO: cleanup
 						  }))
 //						.child(Components.list())
 						.padding(Insets.of(10))

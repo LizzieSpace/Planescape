@@ -18,6 +18,7 @@
     "client": ["de.horiko.planescape.client.PlanescapeClient"],
     "main": ["de.horiko.planescape.Planescape"]
   },
+  "accessWidener": "planescape.accesswidener",
   "mixins": [
     "planescape.mixins.json", {
       "config": "planescape.client.mixins.json",

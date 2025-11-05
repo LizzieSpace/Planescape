@@ -2,7 +2,7 @@ package de.horiko.planescape.mixin;
 
 
 import com.mojang.datafixers.DataFixer;
-import de.horiko.planescape.PlanescapeAPI;
+import de.horiko.planescape.api.PlanescapeAPI;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.Services;
 import net.minecraft.server.WorldStem;
@@ -10,6 +10,7 @@ import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.server.level.progress.LevelLoadListener;
 import net.minecraft.server.packs.repository.PackRepository;
 import net.minecraft.world.level.storage.LevelStorageSource;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,8 +18,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.net.Proxy;
-
-import static de.horiko.planescape.Planescape.API;
 
 /**
  * <p>A Mixin class targeting the {@code MinecraftServer} to integrate the {@code PlanescapeAPI}
@@ -30,7 +29,7 @@ import static de.horiko.planescape.Planescape.API;
  *   <li>Finalizing and cleaning up the {@code PlanescapeAPI} upon the server's shutdown.</li>
  * </ul>
  *
- * <p>The integration leverages Fabric's Mixin library, utilizing injection into the
+ * <p>The integration leverages Fabric's Mixin library, using injection into the
  * {@code MinecraftServer} to hook into specific lifecycle methods and ensure the proper
  * execution of {@code PlanescapeAPI} logic.</p>
  *
@@ -42,6 +41,7 @@ import static de.horiko.planescape.Planescape.API;
  *   after its execution (<code>RETURN</code>), to trigger the cleanup process of {@code PlanescapeAPI}.</li>
  * </ul>
  */
+@Debug(export = true)
 @Mixin(MinecraftServer.class)
 public class MinecraftServerMixin {
 
@@ -56,22 +56,28 @@ public class MinecraftServerMixin {
 	                    LevelLoadListener levelLoadListener,
 	                    CallbackInfo ci
 	                   ) {
-		//noinspection ReferenceToMixin
-		((PlanescapeAPIAccessor) API).callInitializeAPI(worldStem);
+        PlanescapeServerAccessor.callInitializeServer(worldStem);
 	}
 
-	@Mixin(PlanescapeAPI.class)
-	private interface PlanescapeAPIAccessor {
-		@Invoker void callInitializeAPI(WorldStem worldStem);
-		@Invoker void callFinalizeAPI();
-	}
+    @Mixin(value = PlanescapeAPI.Server.class, remap = false)
+    private interface PlanescapeServerAccessor {
+        @Invoker
+        static void callInitializeServer(WorldStem worldStem) {
+            throw new AssertionError();
+        }
 
-	@Mixin({MinecraftServer.class, DedicatedServer.class})
+        @Invoker
+        static void callFinalizeServer() {
+            throw new AssertionError();
+        }
+    }
+
+    @Debug(export = true)
+    @Mixin({DedicatedServer.class, MinecraftServer.class})
 	private static class ServerShutdownListener {
 		@Inject(method = "onServerExit()V", at = @At(value = "RETURN"))
 		private void InjectPlanescapeAPI_Finalizer(CallbackInfo ci) {
-			//noinspection ReferenceToMixin
-			((PlanescapeAPIAccessor) API).callFinalizeAPI();
+            PlanescapeServerAccessor.callFinalizeServer();
 		}
 	}
 }

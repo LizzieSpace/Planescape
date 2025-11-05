@@ -1,6 +1,7 @@
 package de.horiko.planescape.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import de.horiko.planescape.client.api.ClientNetworking;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -17,6 +18,8 @@ public class PlanescapeClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+        ClientNetworking.init();
+
 		keyMapping = KeyBindingHelper.registerKeyBinding(new KeyMapping(
 				"key.planescape.openMenu",
 				InputConstants.Type.KEYSYM,
@@ -26,6 +29,7 @@ public class PlanescapeClient implements ClientModInitializer {
 
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (keyMapping.consumeClick()) {
+                ClientNetworking.requestServerState();
 				Minecraft.getInstance().setScreen(new PlanescapeMenu());
 			}
 		});

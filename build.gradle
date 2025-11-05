@@ -19,6 +19,17 @@ loom {
             sourceSet sourceSets.client
         }
     }
+    runs {
+        client {
+            client()
+            vmArg("-XX:+AllowEnhancedClassRedefinition")
+        }
+        server {
+            server()
+            vmArg("-XX:+AllowEnhancedClassRedefinition")
+        }
+    }
+    accessWidenerPath = file("src/main/resources/planescape.accesswidener")
 }
 
 

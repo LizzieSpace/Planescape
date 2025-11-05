@@ -1,9 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "de.horiko.planescape.client.mixin",
+  "package": "de.horiko.planescape.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "MinecraftMixin",
+    "MinecraftMixin$ClientNetworkingAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

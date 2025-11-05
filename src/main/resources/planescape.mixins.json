@@ -3,7 +3,11 @@
   "minVersion": "0.8",
   "package": "de.horiko.planescape.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["MinecraftServerMixin", "MinecraftServerMixin$PlanescapeAPIAccessor", "MinecraftServerMixin$ServerShutdownListener"],
+  "mixins": [
+    "MinecraftServerMixin",
+    "MinecraftServerMixin$PlanescapeServerAccessor",
+    "MinecraftServerMixin$ServerShutdownListener"
+  ],
   "injectors": {
     "defaultRequire": 1
   },
